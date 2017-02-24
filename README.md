@@ -16,6 +16,7 @@ The steps of this project are the following:
 [image1]: ./images/Images_captured.JPG "Images"
 [image2]: ./images/Image_augmentation.JPG "Area of interest"
 [image3]: ./images/model.png "NVIDIA Model"
+[image4]: ./images/mean_squared_error_loss.png "mean_squared_error_loss"
 
 
 ## Rubric Points
@@ -66,8 +67,7 @@ All this process have been implemented in the `preprocess_image` function, and f
 I used [NVIDIA MODEL](https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/)  :
 My model consists has as an input a RGB (3 filters) image with 200x66 as dimensions, then the input is (200,66,3 )
 
-![alt text][image3]
-Image generated with `plot(model, to_file='model.png',show_shapes =True, show_layer_names=False)`
+
 
 *The data is normalized in the model using a Keras lambda layer (code in the function get_NVIDIA_model). This is useful to have a more familiar range to work on. The reason is because in the process that we will train our network.
 * I used ELU (Exponential Linear Units)  as activation function. The “exponential linear unit” (ELU) which speeds up learning in
@@ -78,3 +78,9 @@ deep neural networks and leads to higher classification accuracies. [Reference] 
 * For Training and Validation Loss Metrics, I used `fit_generator` because it runs in parallel to the model, for efficiency.
 * The model was trained and validated on Udacity's [sample training data](https://d17h27t6h515a5.cloudfront.net/topher/2016/December/584f6edd_data/data.zip)  with Image augmentation to ensure that the model was not overfitting. The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track. However, I have to modify the drive behavior to get this result.
 Here is a visualization of the architecture:
+![alt text][image3]
+
+Image generated with `plot(model, to_file='model.png',show_shapes =True, show_layer_names=False)`
+
+Here is a visualization of the mean squared error loss in the final model elected:
+![alt text][image4]
