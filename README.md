@@ -15,6 +15,7 @@ The steps of this project are the following:
 
 [image1]: ./images/Images_captured.JPG "Images"
 [image2]: ./images/Image_augmentation.JPG "Area of interest"
+[image3]: ./images/model.png "NVIDIA Model"
 
 
 ## Rubric Points
@@ -64,6 +65,9 @@ All this process have been implemented in the `preprocess_image` function, and f
 #### 2. NVIDIA Model .
 I used [NVIDIA MODEL](https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/)  :
 My model consists has as an input a RGB (3 filters) image with 200x66 as dimensions, then the input is (200,66,3 )
+
+![alt text][image3]
+Image generated with `plot(model, to_file='model.png',show_shapes =True, show_layer_names=False)`
 
 *The data is normalized in the model using a Keras lambda layer (code in the function get_NVIDIA_model). This is useful to have a more familiar range to work on. The reason is because in the process that we will train our network.
 * I used ELU (Exponential Linear Units)  as activation function. The “exponential linear unit” (ELU) which speeds up learning in
