@@ -28,8 +28,8 @@ def read_csvfile (csv_filename):
 def AOI_image (img, resize_value):
     #Area of interest of the image, it applies crop and resize.
     (h, w) = img.shape[:2]
-    y1=int(h*0.375)
-    y2=int(h*0.125)
+    y1=int(h*0.35)
+    y2=int(h*0.16)
     x=0
     nimg = cv2.resize(img[y1:h-y2, x:x+w],resize_value)
     return nimg
@@ -86,6 +86,8 @@ def preprocess_image(data_line, resize_image):
         img, steering = image_flip(img,steering)
     if np.random.randint(2) == 1:
         img,steering=image_traslation (img,steering, randint(-25,25) ,0)
+    if np.random.randint(2) == 1:
+        img,steering=image_traslation (img,steering, 0 ,randint(-10,10))
     if np.random.randint(2) == 1:
         img=change_brightness(img, np.random.uniform(0.6, 1.3))
     img =np.asarray(img, dtype=np.float32)
@@ -193,7 +195,7 @@ model =get_NVIDIA_model()
 model.compile(optimizer=adam,loss='mse')
 
 
-sample_size = len(driving_log['center'] )
+sample_size = len(driving_log['center'] )*2
 epoch_size = sample_size*8
 for index in range(5):
     history = model.fit_generator(train_data_generator, validation_data = validation_data_generator,samples_per_epoch = epoch_size, nb_val_samples = sample_size, nb_epoch=2) 
