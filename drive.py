@@ -122,6 +122,17 @@ if __name__ == '__main__':
     weights_file = args.model.replace('json', 'h5')
     model.load_weights(weights_file)
 
+    if args.image_folder != '':
+        print("Creating image folder at {}".format(args.image_folder))
+        if not os.path.exists(args.image_folder):
+            os.makedirs(args.image_folder)
+        else:
+            shutil.rmtree(args.image_folder)
+            os.makedirs(args.image_folder)
+        print("RECORDING THIS RUN ...")
+    else:
+        print("NOT RECORDING THIS RUN ...")
+	
     # wrap Flask application with engineio's middleware
     app = socketio.Middleware(sio, app)
 
