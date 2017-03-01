@@ -51,6 +51,7 @@ Images captured from the Udacity simulator:
 ##### a.Image processing:
 All this process have been implemented in the `read_image` function.
 ###### i. Select the data that can represent a good data distribution (removing some images with steering =0 ), and eliminate some data that has an unexpected behavior (Sometimes I got out of the road). This is my data distribution before image augmentation:
+![alt text][image5]
 
 ###### ii. Select area of interest, the dimensions of the image is 320x160 pixels. The area of interes is only the road, then I cropped the image to get only the road.
 ###### iii. Resize the image to 200x66  pixels and generate a numpy array of float values `img =np.asarray(img, dtype=np.float32)` This will be the data entry for the convolutional neuronal network.
