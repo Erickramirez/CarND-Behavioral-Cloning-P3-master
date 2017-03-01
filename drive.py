@@ -1,5 +1,6 @@
 import argparse
 import base64
+from datetime import datetime
 import json
 
 import numpy as np
@@ -12,6 +13,8 @@ from PIL import ImageOps
 from flask import Flask, render_template
 from io import BytesIO
 import cv2
+import os
+import shutil
 
 from keras.models import model_from_json
 from keras.preprocessing.image import img_to_array
@@ -87,14 +90,16 @@ def telemetry(sid, data):
     
     if  speed > 14 and abs(steering_angle) >= 0.20:
         throttle = -1
-    #throttle = (set_speed - speed)*K
-    #throttle = min(throttle_max, throttle)
-    #throttle = 0.3
-#throttle = 0.2
-    # else don't change from previous
+
     print("{0:.2f}".format(steering_angle), "--",throttle,"--", speed )
     send_control(steering_angle, throttle)
 
+
+    # save frame
+    if args.image_folder != '':
+        timestamp = datetime.utcnow().strftime('%Y_%m_%d_%H_%M_%S_%f')[:-3]
+        image_filename = os.path.join(args.image_folder, timestamp)
+        image.save('{}.jpg'.format(image_filename))
 
 @sio.on('connect')
 def connect(sid, environ):
@@ -113,6 +118,14 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Remote Driving')
     parser.add_argument('model', type=str,
     help='Path to model definition json. Model weights should be on the same path.')
+    parser.add_argument(
+        'image_folder',
+        type=str,
+        nargs='?',
+        default='',
+        help='Path to image folder. This is where the images from the run will be saved.'
+    )
+
     args = parser.parse_args()
     with open(args.model, 'r') as jfile:
         # model = model_from_json(json.load(jfile))
@@ -132,7 +145,7 @@ if __name__ == '__main__':
         print("RECORDING THIS RUN ...")
     else:
         print("NOT RECORDING THIS RUN ...")
-	
+
     # wrap Flask application with engineio's middleware
     app = socketio.Middleware(sio, app)
 
