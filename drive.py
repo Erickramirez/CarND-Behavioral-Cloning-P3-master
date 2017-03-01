@@ -28,8 +28,8 @@ model = None
 def AOI_image (img, resize_value):
     #Area of interest of the image, it applies crop and resize.
     (h, w) = img.shape[:2]
-    y1=int(h*0.375)
-    y2=int(h*0.125)
+    y1=int(h*0.35)
+    y2=int(h*0.16)
     x=0
     nimg = cv2.resize(img[y1:h-y2, x:x+w],resize_value)
     #nimg = cv2.cvtColor(nimg,cv2.COLOR_RGB2YUV)
@@ -52,8 +52,8 @@ def telemetry(sid, data):
     image = Image.open(BytesIO(base64.b64decode(imgString)))
 
     # model >= 5
-    x = np.asarray(image, dtype=np.float32)
-    image_array = preprocess_input(x)
+    x = preprocess_input(np.array(image))
+    image_array = np.asarray(x, dtype=np.float32)
     transformed_image_array = image_array[None, :, :, :]
 
     
@@ -84,8 +84,9 @@ def telemetry(sid, data):
         throttle = 0
     elif  speed < 8:
         throttle = 0.8
-    elif  speed > 15 and abs(steering_angle) >= 0.22:
-        throttle = -0.3
+    
+    if  speed > 14 and abs(steering_angle) >= 0.20:
+        throttle = -1
     #throttle = (set_speed - speed)*K
     #throttle = min(throttle_max, throttle)
     #throttle = 0.3
