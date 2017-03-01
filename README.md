@@ -6,7 +6,7 @@
 **Behavioral Cloning Project**
 
 The steps of this project are the following:
-* Use the simulator to collect data of good driving behavior. To achieve  this task, I only used only Udacity's [sample training data](https://d17h27t6h515a5.cloudfront.net/topher/2016/December/584f6edd_data/data.zip)  and image augmentation.
+* Use the simulator to collect data of good driving behavior. To achieve  this task, Most of the data that I used is from Udacity's [sample training data](https://d17h27t6h515a5.cloudfront.net/topher/2016/December/584f6edd_data/data.zip), I collected some data from my driving and I performed image augmentation.
 * Build, a convolution neural network in Keras that predicts steering angles from images. I used [NVIDIA MODEL](https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/) 
 * Train and validate the model with a training and validation set.
 * Test that the model successfully drives around track one without leaving the road
@@ -14,9 +14,11 @@ The steps of this project are the following:
 [//]: # (Image References)
 
 [image1]: ./images/Images_captured.JPG "Images"
-[image2]: ./images/Image_augmentation.JPG "Area of interest"
+[image2]: ./images/Image_augmentation.png "Area of interest"
 [image3]: ./images/model.png "NVIDIA Model"
 [image4]: ./images/mean_squared_error_loss.png "mean_squared_error_loss"
+[image5]: ./images/data_distribution.png "data_distribution"
+
 
 
 ## Rubric Points
@@ -29,6 +31,8 @@ My project includes the following files:
 * drive.py for driving the car in autonomous mode
 * model.h5 containing a trained convolution neural network 
 * readme.md summarizing the results
+* [Track1.mp4](./Track1.mp4)
+* [Track2.mp4](./Track2.mp4)
 
 ###Model Architecture and Training Strategy
 
@@ -46,7 +50,8 @@ Images captured from the Udacity simulator:
 
 ##### a.Image processing:
 All this process have been implemented in the `read_image` function.
-###### i. Select only the data with throttle > 0.2 and speed>10, this because contains more accurate data about what is the expected reaction for a car that is going forward.
+###### i. Select the data that can represent a good data distribution (removing some images with steering =0 ), and eliminate some data that has an unexpected behavior (Sometimes I got out of the road). This is my data distribution before image augmentation:
+
 ###### ii. Select area of interest, the dimensions of the image is 320x160 pixels. The area of interes is only the road, then I cropped the image to get only the road.
 ###### iii. Resize the image to 200x66  pixels and generate a numpy array of float values `img =np.asarray(img, dtype=np.float32)` This will be the data entry for the convolutional neuronal network.
 
@@ -57,7 +62,7 @@ It is returning the following image:
 ##### b. Image augmentation consist in the following functions:
 All this process have been implemented in the `preprocess_image` function, and for the the batch generation I'm using `generate_train_batch` function
 ###### i. Flip the image to have more steering angles to analyze. It involves to multiply the steering*-1
-###### ii. Use right and left cameras. The steering angle would be less than the steering angle from the center camera. From the right camera's perspective, the steering angle would be larger than the angle from the center camera. `stering=stering +/- delta` I defined this delta as 0.25 (This data was obtained after evaluation on the pixels of images)
+###### ii. Use right and left cameras. The steering angle would be less than the steering angle from the center camera. From the right camera's perspective, the steering angle would be larger than the angle from the center camera. `steering =steering  +/- delta` I defined this delta as 0.25 (This data was obtained after evaluation on the pixels of images)
 ###### iii. Change brightness in order to get a more rebust model to the brightness.
 ###### iv. Image translation to generate more images with steering variations.
 ###### v. Little perturbation in the steering, this because the the same image could have a little variation on the steering that will be a good answer, even for the humans we perform little different variations of the steering in the same situation. `nsteering= steering*(1+np.random.uniform(-1, 1)/50)`
