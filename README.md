@@ -1,6 +1,6 @@
-#**Behavioral Cloning** 
+# **Behavioral Cloning** 
 
-##Project No3 for 1st. Term of Self-Driving Car Engineer Nanodegree at Udacity
+## Project No3 for 1st. Term of Self-Driving Car Engineer Nanodegree at Udacity
 
 ---
 **Behavioral Cloning Project**
@@ -22,10 +22,10 @@ The steps of this project are the following:
 
 
 ## Rubric Points
-###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
+### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
 
 ---
-###Files Submitted & Code Quality
+### Files Submitted & Code Quality
 My project includes the following files:
 * model.py containing the script to create and train the model (also the  Model.ipynb file contains the details about the process)
 * drive.py for driving the car in autonomous mode
@@ -34,9 +34,9 @@ My project includes the following files:
 * [Track1.mp4](./Track1.mp4)
 * [Track2.mp4](./Track2.mp4)
 
-###Model Architecture and Training Strategy
+### Model Architecture and Training Strategy
 
-####1. Collecting the Data
+#### 1. Collecting the Data
 I only used only Udacity's [sample training data](https://d17h27t6h515a5.cloudfront.net/topher/2016/December/584f6edd_data/data.zip)  and image augmentation.
 
 
